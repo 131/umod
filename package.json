@@ -1,0 +1,34 @@
+{
+  "name": "umod",
+  "version": "1.0.0",
+  "description": "Micro data model for nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": " git@github.com:131/umod.git"
+  },
+  "keywords": [
+    "model",
+    "data model",
+    "micro model",
+    "co",
+    "yks",
+    "static inheritance",
+    "pg",
+    "pg-co",
+    "model collection",
+    "Let's have a beer & talk in Paris"
+  ],
+  "author": "Francois Leurent <131.js@cloudyks.org>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/131/umod/issues"
+  },
+  "homepage": "https://github.com/131/umod",
+  "dependencies": {
+    "mout": "^1.0.0"
+  }
+}

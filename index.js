@@ -6,9 +6,7 @@ var forIn     = require('mout/object/forIn');
 
 class Base {
   constructor(infos) {
-    forIn(infos, (v, k) => {
-      this[k] = v;
-    })
+    forIn(infos, (v, k) => { this[k] = v; })
   }
 
   static *from_ids(guids){
@@ -27,8 +25,20 @@ class Base {
   static * instanciate(guid) {
     var tmp = (yield this.from_ids([guid])) [guid];
     if(!tmp)
-      throw ("Cannot lookup " + tmp);
+      throw ("Cannot instanciate " + guid);
     return Promise.resolve(tmp);
+  }
+
+  get where(){
+    var key  = this.constructor.key, out = {};
+    out[key] = this[key];
+    return out;
+  }
+
+  * update(data) {
+    yield ctx.lnk.update(this.constructor.table, data, this.where);
+    forIn(data, (v, k) => { this[k] = v; })
+    return this;
   }
 
 }

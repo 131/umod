@@ -1,23 +1,24 @@
 # umod
 Micro data model for nodejs.
-Rely on (async/await) data connector (process.env.lnk) availability
 
 
 # Example
 ```
 class File extends require('umod') {
   //dostuff
-
+  static get sql_table() { return "someable"; }
+  static get sql_key() { return "some_key"; }
 }
-File.table = "someable";
-File.key = "some_key";
+
+var lnk = pg.connect("somecreds@somehost");
 
 co(function*(){
-  var foo = yield File.instanciate(some_guid);
+  var foo = yield File.instanciate(lnk, some_guid);
     //results in SELECT * FROM sometable WHERE some_key=?, some_guid
     //return a simple File instance with all columns as properties
 
-  var foos = yield File.from_ids([some_guid, some_other_guid]);
+
+  var foos = yield File.from_ids(lnk, [some_guid, some_other_guid]);
     //same thing here
 });
 
@@ -30,9 +31,6 @@ Search for a model through data connector, throw if missing
 ## Static from_ids
 Instanciate a list of model, return a key indexed dictionnary
 
-
-# Notes
-I recommand using static getters to declare the (mandatory) "table" & "key" property (it's easier to read)
 
 
 # TODO

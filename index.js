@@ -17,6 +17,7 @@ class Base {
 
 
   static *from_where(lnk, where){
+
     var tmp = yield lnk.select(this.sql_table, where), ret = {};
 
     tmp.forEach(v => {
@@ -48,7 +49,7 @@ class Base {
   }
 
   * sql_delete(lnk) {
-    yield lnk.delete(this.constructor.sql_table, data, this.where);
+    yield lnk.delete(this.constructor.sql_table, this.where);
   }
 
 }

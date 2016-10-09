@@ -4,7 +4,8 @@
   "description": "Micro data model for nodejs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node node_modules/istanbul/lib/cli.js cover --report text-summary --report html --report lcov  node_modules/mocha/bin/_mocha -- -r mocha-plugin-co",
+    "coveralls": "npm install coveralls && node ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,14 @@
   },
   "homepage": "https://github.com/131/umod",
   "dependencies": {
-    "mout": "^1.0.0"
+    "mout": "^1.0.0",
+    "mocha-plugin-co": "^1.0.0",
+    "pg-co": "^1.7.2"
+  },
+  "devDependencies": {
+    "co": "^4.6.0",
+    "expect.js": "^0.3.1",
+    "istanbul": "~0.3.18",
+    "mocha": "^2.2.5"
   }
 }

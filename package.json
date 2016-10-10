@@ -30,14 +30,15 @@
   },
   "homepage": "https://github.com/131/umod",
   "dependencies": {
-    "mout": "^1.0.0",
     "mocha-plugin-co": "^1.0.0",
+    "mout": "^1.0.0",
     "pg-co": "^1.7.2"
   },
   "devDependencies": {
     "co": "^4.6.0",
     "expect.js": "^0.3.1",
     "istanbul": "~0.3.18",
-    "mocha": "^2.2.5"
+    "mocha": "^2.2.5",
+    "sql-template": "^0.4.0"
   }
 }

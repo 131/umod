@@ -4,7 +4,9 @@ Micro data model for nodejs.
 
 # Example
 ```
-class File extends require('umod') {
+const uMod = require('umod');
+
+class File extends uMod {
   //dostuff
   static get sql_table() { return "someable"; }
   static get sql_key() { return "some_key"; }

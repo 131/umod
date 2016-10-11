@@ -1,7 +1,6 @@
 "use strict";
 
 const uMod        = require('../');
-const co          = require('co');
 const pg          = require('pg-co');
 const expect      = require('expect.js');
 const SQL         = require('sql-template');

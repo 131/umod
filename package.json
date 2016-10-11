@@ -37,8 +37,8 @@
   "devDependencies": {
     "co": "^4.6.0",
     "expect.js": "^0.3.1",
-    "istanbul": "~0.3.18",
-    "mocha": "^2.2.5",
-    "sql-template": "^0.4.0"
+    "istanbul": "~0.4.5",
+    "mocha": "^3.1.2",
+    "sql-template": "^1.0.0"
   }
 }

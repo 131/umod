@@ -2,6 +2,11 @@
 Micro data model for nodejs.
 
 
+[![Build Status](https://travis-ci.org/131/umod.svg?branch=master)](https://travis-ci.org/131/umod)
+[![Coverage Status](https://coveralls.io/repos/github/131/umod/badge.svg?branch=master)](https://coveralls.io/github/131/umod?branch=master)
+[![NPM version](https://img.shields.io/npm/v/umod.svg)](https://www.npmjs.com/package/umod)
+
+
 # Example
 ```
 const uMod = require('umod');
@@ -45,6 +50,3 @@ model, data model, micro model, co, sql, yks, static inheritance, pg, pg-co, mod
 # Credits
 * [131](https://github.com/131)
 
-
-[![Build Status](https://travis-ci.org/131/umod.svg?branch=master)](https://travis-ci.org/131/umod)
-[![Coverage Status](https://coveralls.io/repos/github/131/umod/badge.svg?branch=master)](https://coveralls.io/github/131/umod?branch=master)

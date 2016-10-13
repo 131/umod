@@ -34,6 +34,13 @@ class Base {
     return Promise.resolve(tmp);
   }
 
+
+  static batch(collection) {
+    return {
+      [this.sql_key] : Object.keys(collection)
+    };
+  }
+
   get where(){
     var sql_key  = this.constructor.sql_key;
 

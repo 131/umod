@@ -1,6 +1,6 @@
 {
   "name": "umod",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Micro data model for nodejs",
   "main": "index.js",
   "scripts": {

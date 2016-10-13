@@ -32,15 +32,21 @@ describe("Basic testing", function() {
     yield lnk.insert("users", {user_id:41, user_name:'Adam'});
     yield lnk.insert("users", {user_id:42, user_name:'Eve'});
 
-    var all = yield lnk.select("users");
 
     var User = class extends uMod {
       static get sql_table(){ return "users"; }
       static get sql_key(){ return "user_id"; }
     };
 
+    var all = yield User.from_where(lnk, true);
+    expect(User.batch(all)).to.eql({
+      'user_id': [41, 42]
+    });
+
+
     var adam = yield User.instanciate(lnk, 41);
     expect(adam.user_name).to.eql("Adam");
+    expect(adam.sql_where).to.eql({ 'user_id' : 41} );
 
     yield adam.sql_update(lnk, {user_name : "Cain" });
 

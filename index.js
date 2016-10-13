@@ -41,7 +41,8 @@ class Base {
     };
   }
 
-  get where(){
+
+  get sql_where(){
     var sql_key  = this.constructor.sql_key;
 
     return {
@@ -50,13 +51,13 @@ class Base {
   }
 
   * sql_update(lnk, data) {
-    yield lnk.update(this.constructor.sql_table, data, this.where);
+    yield lnk.update(this.constructor.sql_table, data, this.sql_where);
     forIn(data, (v, k) => { this[k] = v; })
     return this;
   }
 
   * sql_delete(lnk) {
-    yield lnk.delete(this.constructor.sql_table, this.where);
+    yield lnk.delete(this.constructor.sql_table, this.sql_where);
   }
 
 }

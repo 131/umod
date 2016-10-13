@@ -1,5 +1,5 @@
 # umod
-Micro data model for nodejs.
+Micro data model mapper for nodejs.
 
 [![Build Status](https://travis-ci.org/131/umod.svg?branch=master)](https://travis-ci.org/131/umod)
 [![Coverage Status](https://coveralls.io/repos/github/131/umod/badge.svg?branch=master)](https://coveralls.io/github/131/umod?branch=master)

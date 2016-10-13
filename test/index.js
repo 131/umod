@@ -46,7 +46,7 @@ describe("Basic testing", function() {
 
     var adam = yield User.instanciate(lnk, 41);
     expect(adam.user_name).to.eql("Adam");
-    expect(adam.sql_where).to.eql({ 'user_id' : 41} );
+    expect(adam.batch()).to.eql({ 'user_id' : 41} );
 
     yield adam.sql_update(lnk, {user_name : "Cain" });
 

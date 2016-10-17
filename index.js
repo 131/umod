@@ -1,6 +1,7 @@
 "use strict";
 
-var forIn     = require('mout/object/forIn');
+const forIn     = require('mout/object/forIn');
+const pick      = require('mout/object/pick');
 
 class Base {
 
@@ -12,7 +13,9 @@ class Base {
     // "this" relate to the parent class, boo - yeah.
 
     var where = {}; where[this.sql_key] = guids;
-    return yield this.from_where(lnk, where);
+    var response = yield this.from_where(lnk, where);
+    response = pick(response, guids);
+    return response;
   }
 
 

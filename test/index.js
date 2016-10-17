@@ -27,10 +27,10 @@ describe("Basic testing", function() {
 
 
   it("should insert mock data", function*() {
-    yield lnk.query(SQL`CREATE TEMP TABLE users (user_id INTEGER, user_name TEXT)`);
+    yield lnk.query(SQL`CREATE TEMP TABLE users (user_id TEXT, user_name TEXT)`);
 
-    yield lnk.insert("users", {user_id:41, user_name:'Adam'});
-    yield lnk.insert("users", {user_id:42, user_name:'Eve'});
+    yield lnk.insert("users", {user_id:'a41', user_name:'Adam'});
+    yield lnk.insert("users", {user_id:'a42', user_name:'Eve'});
 
 
     var User = class extends uMod {
@@ -38,30 +38,35 @@ describe("Basic testing", function() {
       static get sql_key(){ return "user_id"; }
     };
 
+
+    var all = yield User.from_ids(lnk, ['a42','a41']);
+    expect(Object.keys(all)).to.eql(['a42','a41']);
+
+
     var all = yield User.from_where(lnk, true);
     expect(User.batch(all)).to.eql({
-      'user_id': [41, 42]
+      'user_id': ['a41', 'a42']
     });
 
 
-    var adam = yield User.instanciate(lnk, 41);
+    var adam = yield User.instanciate(lnk, 'a41');
     expect(adam.user_name).to.eql("Adam");
-    expect(adam.batch()).to.eql({ 'user_id' : 41} );
+    expect(adam.batch()).to.eql({ 'user_id' : 'a41'} );
 
     yield adam.sql_update(lnk, {user_name : "Cain" });
 
     expect(adam.user_name).to.eql("Cain");
-    var dbcheck = yield lnk.value("users", {user_id : 41}, "user_name");
+    var dbcheck = yield lnk.value("users", {user_id : 'a41'}, "user_name");
     expect(dbcheck).to.eql("Cain");
 
 
     yield adam.sql_delete(lnk);
 
     try {
-      var bar = yield User.instanciate(lnk, 41);
+      var bar = yield User.instanciate(lnk, 'a41');
       expect.fail("Not here");
     } catch(err){
-      expect(err).to.eql("Cannot instanciate 41");
+      expect(err).to.eql("Cannot instanciate a41");
     }
 
   });

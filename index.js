@@ -9,19 +9,19 @@ class Base {
     forIn(infos, (v, k) => { this[k] = v; })
   }
 
-  static *from_ids(lnk, guids){
+  static * from_ids(ctx, guids) {
     // "this" relate to the parent class, boo - yeah.
 
     var where = {}; where[this.sql_key] = guids;
-    var response = yield this.from_where(lnk, where);
+    var response = yield this.from_where(ctx, where);
     response = pick(response, guids);
     return response;
   }
 
 
-  static *from_where(lnk, where){
+  static * from_where(ctx, where) {
 
-    var tmp = yield lnk.select(this.sql_table, where), ret = {};
+    var tmp = yield ctx.lnk.select(this.sql_table, where), ret = {};
 
     tmp.forEach(v => {
       ret[v[this.sql_key]] = new this(v);//Hell awaits me
@@ -30,8 +30,8 @@ class Base {
     return Promise.resolve(ret);
   }
 
-  static * instanciate(lnk, guid) {
-    var tmp = (yield this.from_ids(lnk, [guid])) [guid];
+  static * instanciate(ctx, guid) {
+    var tmp = (yield this.from_ids(ctx, [guid])) [guid];
     if(!tmp)
       throw ("Cannot instanciate " + guid);
     return Promise.resolve(tmp);
@@ -44,7 +44,7 @@ class Base {
     };
   }
 
-  batch(){
+  batch() {
     var sql_key  = this.constructor.sql_key;
 
     return {
@@ -52,14 +52,14 @@ class Base {
     };
   }
 
-  * sql_update(lnk, data) {
-    yield lnk.update(this.constructor.sql_table, data, this.batch());
+  * sql_update(ctx, data) {
+    yield ctx.lnk.update(this.constructor.sql_table, data, this.batch());
     forIn(data, (v, k) => { this[k] = v; })
     return this;
   }
 
-  * sql_delete(lnk) {
-    yield lnk.delete(this.constructor.sql_table, this.batch());
+  * sql_delete(ctx) {
+    yield ctx.lnk.delete(this.constructor.sql_table, this.batch());
   }
 
 }

@@ -4,7 +4,11 @@
   "description": "Micro data model for nodejs",
   "main": "index.js",
   "scripts": {
-    "test": "node node_modules/istanbul/lib/cli.js cover --report text-summary --report html --report lcov  node_modules/mocha/bin/_mocha -- -r mocha-plugin-co",
+    "jscs": "jscs --config=node_modules/ivs-jssc/ivs-node.jscsrc index.js",
+    "eslint": "eslint --config=node_modules/ivs-jssc/ivs-node.eslintrc.js index.js",
+    "checkall": "npm run eslint && npm run jscs",
+    "test": "npm run checkall && npm run cover",
+    "cover": "node node_modules/istanbul/lib/cli.js cover --report text-summary --report html --report lcov  node_modules/mocha/bin/_mocha",
     "coveralls": "npm install coveralls && node ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info"
   },
   "repository": {
@@ -19,7 +23,7 @@
     "yks",
     "static inheritance",
     "pg",
-    "pg-co",
+    "pg-aa",
     "model collection",
     "Let's have a beer & talk in Paris"
   ],
@@ -35,9 +39,9 @@
   "devDependencies": {
     "expect.js": "^0.3.1",
     "istanbul": "~0.4.5",
+    "ivs-jssc": "^2.1.2",
     "mocha": "^3.1.2",
-    "mocha-plugin-co": "^1.0.0",
-    "pg-co": "^1.9.3",
+    "pg-aa": "^2.0.4",
     "sql-template": "^1.1.0"
   }
 }

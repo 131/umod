@@ -1,7 +1,7 @@
 "use strict";
 
 const uMod        = require('../');
-const pg          = require('pg-co');
+const Pg          = require('pg-aa');
 const expect      = require('expect.js');
 const SQL         = require('sql-template');
 
@@ -19,18 +19,18 @@ const credentials = {
 describe("Basic testing", function() {
 
   this.timeout(20000);
-  var lnk = new pg(credentials);
+  var lnk = new Pg(credentials);
 
-  it("Should get everything ready", function* (){
-    yield lnk.connect();
+  it("Should get everything ready", async function (){
+    await lnk.connect();
   });
 
 
-  it("should insert mock data", function*() {
-    yield lnk.query(SQL`CREATE TEMP TABLE users (user_id TEXT, user_name TEXT)`);
+  it("should insert mock data", async function() {
+    await lnk.query(SQL`CREATE TEMP TABLE users (user_id TEXT, user_name TEXT)`);
 
-    yield lnk.insert("users", {user_id:'a41', user_name:'Adam'});
-    yield lnk.insert("users", {user_id:'a42', user_name:'Eve'});
+    await lnk.insert("users", {user_id:'a41', user_name:'Adam'});
+    await lnk.insert("users", {user_id:'a42', user_name:'Eve'});
 
 
     var User = class extends uMod {
@@ -39,31 +39,31 @@ describe("Basic testing", function() {
     };
 
 
-    var all = yield User.from_ids(lnk, ['a42','a41']);
+    var all = await User.from_ids(lnk, ['a42','a41']);
     expect(Object.keys(all)).to.eql(['a42','a41']);
 
 
-    var all = yield User.from_where(lnk, true);
+    var all = await User.from_where(lnk, true);
     expect(User.batch(all)).to.eql({
       'user_id': ['a41', 'a42']
     });
 
 
-    var adam = yield User.instanciate(lnk, 'a41');
+    var adam = await User.instanciate(lnk, 'a41');
     expect(adam.user_name).to.eql("Adam");
     expect(adam.batch()).to.eql({ 'user_id' : 'a41'} );
 
-    yield adam.sql_update(lnk, {user_name : "Cain" });
+    await adam.sql_update(lnk, {user_name : "Cain" });
 
     expect(adam.user_name).to.eql("Cain");
-    var dbcheck = yield lnk.value("users", {user_id : 'a41'}, "user_name");
+    var dbcheck = await lnk.value("users", {user_id : 'a41'}, "user_name");
     expect(dbcheck).to.eql("Cain");
 
 
-    yield adam.sql_delete(lnk);
+    await adam.sql_delete(lnk);
 
     try {
-      var bar = yield User.instanciate(lnk, 'a41');
+      var bar = await User.instanciate(lnk, 'a41');
       expect.fail("Not here");
     } catch(err){
       expect(err).to.eql("Cannot instanciate a41");
